@@ -2,16 +2,22 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 class ConnectionHelper:
-    load_dotenv()
-    connectionString = os.getenv("MONGO_URI")
-    databaseString = os.getenv("MONGO_DATABASE")
-    client = None
-    database = None
+    _client = None
+    _database = None
 
-    def __init__(self):
-        self.client = MongoClient(self.connectionString)
-        self.database = self.client[self.databaseString]
+    @classmethod
+    def init_connection(cls):
+        if cls._client is None:
+            connectionString = os.getenv("MONGO_URI")
+            databaseString = os.getenv("MONGO_DATABASE")
+            cls._client = MongoClient(connectionString)
+            cls._database = cls._client[databaseString]
 
-    def insert(self, collection, data):
-        self.database[collection].insert_one(data)
+    @classmethod
+    def insert(cls, collection, data):
+        if cls._database is None:
+            cls.init_connection()
+        cls._database[collection].insert_one(data)
