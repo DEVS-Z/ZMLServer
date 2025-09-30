@@ -1,8 +1,10 @@
 from sanic import Sanic
 from controllers.TestController import test_bp
 from controllers.UserController import user_bp
+from sanic_cors import CORS
 
 app = Sanic("MyAcessApp")
+CORS(app)
 app.blueprint(test_bp)
 app.blueprint(user_bp)# registrar blueprint
 

@@ -11,3 +11,12 @@ class UserController:
         connectionHelper = ConnectionHelper()
         connectionHelper.insert("UserInfo", {"name":"oscar"})
         return json({"message": "UserController greeting!"})
+
+    @user_bp.post(f"/{routes['user']}")
+    async def insert_info(request):
+        data = request.json
+        connectionHelper = ConnectionHelper()
+        connectionHelper.insert("UserInfo", data)
+        return json({
+            "message": "UserInfo inserted!"
+        })
