@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from config.connections import analyzer_pb2 as config_dot_connections_dot_analyzer__pb2
+from . import analyzer_pb2 as analyzer__pb2
 
 GRPC_GENERATED_VERSION = '1.76.0'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in config/connections/analyzer_pb2_grpc.py depends on'
+        + ' but the generated code in analyzer_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -36,8 +36,8 @@ class UserServiceStub(object):
         """
         self.InsertUserData = channel.unary_unary(
                 '/user.UserService/InsertUserData',
-                request_serializer=config_dot_connections_dot_analyzer__pb2.UserData.SerializeToString,
-                response_deserializer=config_dot_connections_dot_analyzer__pb2.InsertResponse.FromString,
+                request_serializer=analyzer__pb2.UserData.SerializeToString,
+                response_deserializer=analyzer__pb2.InsertResponse.FromString,
                 _registered_method=True)
 
 
@@ -55,8 +55,8 @@ def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'InsertUserData': grpc.unary_unary_rpc_method_handler(
                     servicer.InsertUserData,
-                    request_deserializer=config_dot_connections_dot_analyzer__pb2.UserData.FromString,
-                    response_serializer=config_dot_connections_dot_analyzer__pb2.InsertResponse.SerializeToString,
+                    request_deserializer=analyzer__pb2.UserData.FromString,
+                    response_serializer=analyzer__pb2.InsertResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -84,8 +84,8 @@ class UserService(object):
             request,
             target,
             '/user.UserService/InsertUserData',
-            config_dot_connections_dot_analyzer__pb2.UserData.SerializeToString,
-            config_dot_connections_dot_analyzer__pb2.InsertResponse.FromString,
+            analyzer__pb2.UserData.SerializeToString,
+            analyzer__pb2.InsertResponse.FromString,
             options,
             channel_credentials,
             insecure,
